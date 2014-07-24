@@ -2,12 +2,12 @@
 [tweenLite]: http://www.greensock.com/
 [docs]: https://famo.us/docs/
 [cursor]: http://www.w3schools.com/cssref/playit.asp?filename=playcss_cursor&preval=nwse-resize
-![alt text](http://dfree.co.uk/static/asfamous.svg "asFamous Logo")     
+![alt text](http://dfree.co.uk/static/asfamous.svg "asFamous Logo")      
 # asFamous      
 ## actionscript like famous
 
 This project is an attend to script html5 DOM with the ease, speed and consistency what flashplayer was able to provide. It's based on the infamous [Famo.us] [famous] framework, comes with some extra depth handling, event system, transform order and xyz...
-Ex-flash developers will surely love it, web evangelists probably will hate. Even though it's an unmature projects it's really shows some powerfull features (thanks to the strong daddy mostly) and it also suits to the philosophy of Famo.us that everyone should use it... flash deasigners, well, your time has came. The lessons of [Famo.us] [famous] universty are strongly recommended.
+Ex-flash developers will surely love it, web evangelists probably will hate. Even though it's an immature project it's really shows some powerful features (thanks to the strong daddy mostly) and it also suits to the philosophy of Famo.us that everyone should use it... flash designers, well, your time has came. The lessons of [Famo.us] [famous] university are strongly recommended.
 
 One of the beauty of asFamous is that you can also use your [beloved libs] [tweenLite] with its property based structure. 
 
@@ -22,8 +22,8 @@ Happy coding!
 
 #### 0.1 Version notes
 
-- Compatible with famous 0.2.2 (You will need to replace `element.style.zIndex` to `element.style['z-index']` in Surface.js for correct depth handling firefox)
-- Needs a lot of testing, specially according to the property settings order (there is a known malfunction with drag prop if the object hasn't benn added to the root structure before the property was set true) We are trying to make it as async as it's naturally in actionscript but the devil never sleeps. Use addChild() straight after a new object was created until the next stabil version.
+- Compatible with famous 0.2.2 (You will need to replace `element.style.zIndex` to `element.style['z-index']` in Surface.js for correct depth handling in firefox)
+- Needs a lot of testing, specially according to the property settings order (there is a known malfunction with drag prop if the object hasn't been added to the root structure before the property was set true) We are trying to make it as async as it's naturally in actionscript but the devil never sleeps. Use addChild() straight after a new object was created until the next stable version.
 - coming soon: asShape with drawing functionalities like beginBitmapFill() and lineTo() based on canvas.
 
 # Docs
@@ -259,7 +259,7 @@ Represents a `<div/>` wrapper. This asContainer is a weird creature you can use 
 >◣
 >
 > __getBounds()__    
-> Reqursive function returning a rectangle of a space occupied by its children. (test stage)    
+> Recursive function returning a rectangle of a space occupied by its children. (test stage)    
 >                    
 > Returns:    
 > ◦  A rectangle eg. `{x:0, y:0, width:100, height:100}`      
