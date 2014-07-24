@@ -2,7 +2,8 @@
 [tweenLite]: http://www.greensock.com/
 [docs]: https://famo.us/docs/
 [cursor]: http://www.w3schools.com/cssref/playit.asp?filename=playcss_cursor&preval=nwse-resize
-# asFamous      ![alt text](http://dfree.co.uk/static/asfamous.svg "asFamous Logo")
+![alt text](http://dfree.co.uk/static/asfamous.svg "asFamous Logo")     
+# asFamous      
 ## actionscript like famous
 
 This project is an attend to script html5 DOM with the ease, speed and consistency what flashplayer was able to provide. It's based on the infamous [Famo.us] [famous] framework, comes with some extra depth handling, event system, transform order and xyz...
