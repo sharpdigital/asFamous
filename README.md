@@ -2,13 +2,13 @@
 [tweenLite]: http://www.greensock.com/
 [docs]: https://famo.us/docs/
 [cursor]: http://www.w3schools.com/cssref/playit.asp?filename=playcss_cursor&preval=nwse-resize
-# asFamous
+# asFamous      ![alt text](http://dfree.co.uk/static/asfamous.svg "asFamous Logo")
 ## actionscript like famous
 
 This project is an attend to script html5 DOM with the ease, speed and consistency what flashplayer was able to provide. It's based on the infamous [Famo.us] [famous] framework, comes with some extra depth handling, event system, transform order and xyz...
 Ex-flash developers will surely love it, web evangelists probably will hate. Even though it's an unmature projects it's really shows some powerfull features (thanks to the strong daddy mostly) and it also suits to the philosophy of Famo.us that everyone should use it... flash deasigners, well, your time has came. The lessons of [Famo.us] [famous] universty are strongly recommended.
 
-The beauty of asFamous that you can also use your [beloved libs] [tweenLite] with its property based structure. 
+One of the beauty of asFamous is that you can also use your [beloved libs] [tweenLite] with its property based structure. 
 
 [Famo.us] [famous] is on a consistent move and we will try to keep up with the fresh releases and include new features/solutions as quick as possible. Huge thanks to the famous team for playing that much with messy matrixes!
 
@@ -21,7 +21,7 @@ Happy coding!
 
 #### 0.1 Version notes
 
-- Compatible with famous 0.2.2 (You will need to replace element.style.zIndex to element.style['z-index'] in Surface.js for correct depth handling firefox)
+- Compatible with famous 0.2.2 (You will need to replace `element.style.zIndex` to `element.style['z-index']` in Surface.js for correct depth handling firefox)
 - Needs a lot of testing, specially according to the property settings order (there is a known malfunction with drag prop if the object hasn't benn added to the root structure before the property was set true) We are trying to make it as async as it's naturally in actionscript but the devil never sleeps. Use addChild() straight after a new object was created until the next stabil version.
 - coming soon: asShape with drawing functionalities like beginBitmapFill() and lineTo() based on canvas.
 
@@ -454,6 +454,22 @@ Represents a `<div/>` wrapper. This asContainer is a weird creature you can use 
 > ◦  _In case the parent height is greater than the actual object's height scrollY will be disabled._             
 >◣    
 >
+## Listener System
+
+There is a bit of difference between the event handling system of asFamous and Flash. When you add a listener on an element it takes away the mouse activity on all it's children, while in asFamous you can still catch different events on the children as well. So for example (where asImage and asSurface are the children of asSprite) if you click on the image it calls both `sayImage()` and `saySprite()`, but if you click on asSurface it will call only `saySprite()`.
+
+![alt text](http://dfree.co.uk/static/what_does_the_sloth_says.jpg "asFamous Logo")
+
+
+
+
+## //TODO
+
+- Create asShape class with graphics property you can use eg. `lineTo()` and `beginBitmapFill()`.
+- Create asAnim class based on svg animation with `gotoAndPlay()` and `stop()`.
+- Add `this.mouseX` && `this.mouseY`
+- Create stable drag functionality
+
 
 
 

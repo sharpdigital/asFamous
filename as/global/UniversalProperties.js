@@ -67,7 +67,14 @@ function UniversalProperties(){
 
 	Object.defineProperty(this, "children", {
        configurable : true,
-		get : function(){ return this._children; },
+		get : function(){
+			for(var i = 0; i < this._children; i++){
+				if(this._children[i].parent != this){
+					this._children.splice(i, 1);
+				}
+			}
+			return this._children;
+		},
 	    /*set : function(newValue){ this._children = newValue; }*/
 	});
 
@@ -391,8 +398,8 @@ function UniversalProperties(){
        configurable : true,
 		get : function(){ return this._mouseChildren; },
 	    set : function(newValue){ this._mouseChildren = newValue;
-	    	for(var c = 0; c < this._children.length; c++){
-		    	this._children[c].mouseEnabled = newValue;
+	    	for(var c = 0; c < this.children.length; c++){
+		    	this.children[c].mouseEnabled = newValue;
 	    	}
 	    }
 	});

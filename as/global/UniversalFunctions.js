@@ -14,6 +14,7 @@ function UniversalFunctions(){
 			}
 
 			for(var l in this._listeners){
+
 				this.pipeChildren(this._listeners[l], this.dispatcher, this);
 			}
 
@@ -158,27 +159,34 @@ function UniversalFunctions(){
 	}
 
 	// event handling
-	this.dispatcher = function(event) {
-		var e = this._listeners[event.type]
-		if(e){
-			if(e.type == "mouseout"){
-				e.currentTarget._mouse_state = "out";
-				setTimeout(e.currentTarget._mouseOutChecker, 10, e);
-			}
-			if(e.type == "mouseover" && e.currentTarget._mouse_state == "out"){
-				e.currentTarget._mouse_state = "over";
-			}else{
-				if(e.type != "mouseout"){
-					e.currentTarget._mouse_state = "left";
-					e.currentTarget._listeners[e.type].fn(e.currentTarget._listeners[e.type]);
+	this.dispatcher = function(e) {// here comes in the original famous event
+		var events = this._listeners[e.type];
+
+		for(var d = 0; d < events.length; d++){
+			var event = events[d];
+			if(event){
+				if(event.type == "mouseout"){
+					event.currentTarget._mouse_state = "out";
+					setTimeout(event.currentTarget._mouseOutChecker, 10, event);
+				}
+				if(event.type == "mouseover" && event.currentTarget._mouse_state == "out"){
+					event.currentTarget._mouse_state = "over";
+				}else{
+					if(event.type != "mouseout"){
+						event.currentTarget._mouse_state = "left";
+						this._callListenersOfEvent(event);
+					}
 				}
 			}
 		}
 	}
+	this._callListenersOfEvent = function(e){
+		e.fn(e);
+	}
 	this._mouseOutChecker = function(e){
 		if(e.currentTarget._mouse_state != "over"){
 			e.currentTarget._mouse_state = "left";
-			e.currentTarget._listeners[e.type].fn(e.currentTarget._listeners[e.type]);
+			e.currentTarget._callListenersOfEvent(e);
 		}
 	}
 	this.addEventListener = function(type, fn){
@@ -193,21 +201,39 @@ function UniversalFunctions(){
 		return this;
 	};
 	this.removeAllListeners = function(){
-		for(var r in this._listeners){
-			this.unpipeChildren(this._listeners[r], this.dispatcher, this);
+		for(var t in this._listeners){
+			var l = this._listeners[t].length;
+			for(var d = 0; d < l; d++){
+				this.unpipeChildren(this._listeners[t][d], this.dispatcher, this);
+			}
 		}
 		return this;
 	};
+	//this._eventOutput.emit('click');
 	this.pipeChildren = function (e, fn, obj, rec){
 		if(e && fn && obj){
-			if(obj._listeners[e.type] && rec && obj._listeners[e.type].fn != fn){
-				// it means the child has own listener under the same type;
-			}else{
-				obj._listeners[e.type] = e;
-				if(!obj._eventOutput){
-					obj.on(e.type, fn);
+			/*if(!rec){
+				if(obj._eventOutput){
+					obj._eventOutput.on(e.type, fn);
+				}
+			}*/
+			if(!obj._listeners[e.type]){
+				obj._listeners[e.type] = [];
+			}
+			var exists = false;
+			for(var ex = 0; ex < obj._listeners[e.type].length; ex++){
+				if(e.fn === obj._listeners[e.type][ex].fn){
+					exists = true;
+					console.log("FUNCTION EXISTS");
 				}
 			}
+			if(!exists){
+				if(!obj._eventOutput && !obj._listeners[e.type].length){
+					obj.on(e.type, obj.dispatcher);
+				}
+				obj._listeners[e.type].push(e);
+			}
+				
 			for(var c = 0; c < obj._children.length; c++){
 				this.pipeChildren(e, fn, obj._children[c], true);
 			}
@@ -217,10 +243,20 @@ function UniversalFunctions(){
 	this.unpipeChildren = function (e, fn, obj, rec){
 		if(e && fn && obj){
 			var t = e.type;
-			if(obj._listeners[e.type] && obj._listeners[e.type].type === e.type && obj._listeners[t].fn === e.fn){
-				obj._listeners[t] = null;
-				if(!obj._eventOutput){
-					obj.removeListener(t, fn);
+			if(obj._listeners[t]){
+				var l = obj._listeners[t].length;
+				for(var d = 0; d < l; d++){
+					if(obj._listeners[t][d] && obj._listeners[t][d].type === e.type && obj._listeners[t][d].fn === e.fn){
+						obj._listeners[t].splice(d,1);
+						//console.log(obj.dispatcher);
+						if(!obj._listeners[t].length){
+							if(!obj._eventOutput){
+								obj.removeListener(t, obj.dispatcher);
+							}
+							obj._listeners[t] = null;
+
+						}
+					}
 				}
 			}
 			for(var c = 0; c < obj._children.length; c++){
@@ -231,11 +267,7 @@ function UniversalFunctions(){
 		return this;
 	}
 	this.dispatchEvent = function(type){
-		if(this._eventOutput){
-			this._eventOutput.emit(type);
-		}else{
-			this.emit(type);
-		}
+		this.dispatcher({type:type});
 		//TODO make it work
 		return this;
 	};
@@ -245,7 +277,7 @@ function UniversalFunctions(){
 		if(this.root){
 			this.unpipe(this.root.eventHandler);
 		}
-		this.removeAllListeners()
+		this.removeAllListeners();
 		this.removeAllChildren();
 		//TODO test
 		return this;
@@ -302,14 +334,14 @@ function UniversalFunctions(){
 			x = 0;
 		}
 		if(!y){
-			y = 0
+			y = 0;
 		}
 		if(!bounds){
 			bounds = {x:555555, y:555555, width:0, height:0};
 		}
 		if(this._eventOutput){
-			for(var c = 0; c < this._children.length; c++){
-				var child = this._children[c];
+			for(var c = 0; c < this.children.length; c++){
+				var child = this.children[c];
 				bounds = child.getBounds(x+child.x, y+child.y, bounds);
 			}
 		}else{
